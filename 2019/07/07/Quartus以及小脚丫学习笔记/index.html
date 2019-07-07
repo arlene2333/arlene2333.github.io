@@ -186,40 +186,8 @@
     padding: 2px;">错误的选择</div>
 </center>
 
-<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>通过做实验来熟悉这个软件以及了解IP核的使用，明白了锁相环是什么东西<br><br>如在实现移频的实验中，就要用到’’’PLL IP核’’’来利用小脚丫开发板本身的12MHz频率来生成两个时钟频率10MHZ和10KHz<br>再将这两个频率的信号相与就可以实现移频<br>具体的代码如下：</p>
-<pre><code>module usePLL (clk,rst_n,clkout);
-
-    input     clk,rst_n;                       
-    output    clkout;                          
-      wire[1:0] temp1;
-      wire[1:0] temp2;
-
- pll1 m1(.inclk0(clk),
-            .c0(temp1),//10M
-            .c1(temp2)
-
-            );
-    process m2(
-    .clk_in1(temp1),
-    .clk_in2(temp2),
-    .clk_process(clkout)
-    );
-
-
-endmodule
-
-
-module process(clk_in1,clk_in2,clk_process);
-
-input clk_in1,clk_in2;
-
-output clk_process;
-
-
-
-assign clk_process = clk_in1 &amp; clk_in2;
-
-endmodule</code></pre><h3 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h3><p>把代码加载到开发板上去时要用到’’’Tools -&gt; Programmer’’’<br>一开始软件会默认把sof文件添加进去，但我们需要的不是这个，所以应该先把它删除<br>然后在’’’Add File’’’中选择pof文件进行添加，如图所示：</p>
+<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>通过做实验来熟悉这个软件以及了解IP核的使用，明白了锁相环是什么东西<br><br>如在实现移频的实验中，就要用到​<figure class="highlight plain"><figcaption><span>IP核​```来利用小脚丫开发板本身的12MHz频率来生成两个时钟频率10MHZ和10KHz</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">再将这两个频率的信号相与就可以实现移频</span><br><span class="line">具体的代码如下：</span><br><span class="line"></span><br><span class="line">	module usePLL (clk,rst_n,clkout);</span><br><span class="line"> </span><br><span class="line">        input 	clk,rst_n;                       </span><br><span class="line">        output	clkout;                          </span><br><span class="line">		  wire[1:0] temp1;</span><br><span class="line">		  wire[1:0] temp2;</span><br><span class="line"></span><br><span class="line">     pll1 m1(.inclk0(clk),</span><br><span class="line">				.c0(temp1),//10M</span><br><span class="line">				.c1(temp2)</span><br><span class="line">				</span><br><span class="line">				);</span><br><span class="line">		process m2(</span><br><span class="line">		.clk_in1(temp1),</span><br><span class="line">		.clk_in2(temp2),</span><br><span class="line">		.clk_process(clkout)</span><br><span class="line">		);</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">	endmodule</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	module process(clk_in1,clk_in2,clk_process);</span><br><span class="line"></span><br><span class="line">	input clk_in1,clk_in2;</span><br><span class="line">	</span><br><span class="line">	output clk_process;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	assign clk_process = clk_in1 &amp; clk_in2;</span><br><span class="line">	</span><br><span class="line">	endmodule</span><br><span class="line"></span><br><span class="line">### 加载</span><br><span class="line"></span><br><span class="line">把代码加载到开发板上去时要用到​```Tools -&gt; Programmer​</span><br></pre></td></tr></table></figure></p>
+<p>一开始软件会默认把sof文件添加进去，但我们需要的不是这个，所以应该先把它删除<br>然后在​<code>Add File​</code>中选择pof文件进行添加，如图所示：</p>
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g4r7yslrpnj30jc0e1dg8.jpg">
