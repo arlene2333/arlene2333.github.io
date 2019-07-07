@@ -186,10 +186,41 @@
     padding: 2px;">错误的选择</div>
 </center>
 
-<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>通过做实验来熟悉这个软件以及了解IP核的使用，明白了锁相环是什么东西<br><br>如在实现移频的实验中，就要用到​PLL IP核​来利用小脚丫开发板本身的12MHz频率来生成两个时钟频率10MHZ和10KHz<br>再将这两个频率的信号相与就可以实现移频<br>具体的代码如下：</p>
-<pre><code>module usePLL (clk,rst_n,clkout);
+<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>通过做实验来熟悉这个软件以及了解IP核的使用，明白了锁相环是什么东西<br><br>如在实现移频的实验中，就要用到​PLL IP核​来利用小脚丫开发板本身的12MHz频率来生成两个时钟频率10MHZ和10KHz<br>再将这两个频率的信号相与就可以实现移频</p>
+<p>设置ALTPLL时的各种参数如下：</p>
+<p>具体的代码如下：</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g4r8hnxk8qj30ut0ku75y.jpg">
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">inclk0 input设置为12MHz</div>
+</center>
 
-    input     clk,rst_n;                       
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g4r8isvj3uj30ut0ku401.jpg">
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">clkc0设置为10MHz</div>
+</center>
+
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g4r8jdr2qxj30ut0ku75t.jpg">
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">clkc1设置为0.01MHz</div>
+</center>
+    module usePLL (clk,rst_n,clkout);
+
+<pre><code>    input     clk,rst_n;                       
     output    clkout;                          
       wire[1:0] temp1;
       wire[1:0] temp2;
@@ -229,6 +260,12 @@ endmodule</code></pre><h3 id="加载"><a href="#加载" class="headerlink" title
     color: #999;
     padding: 2px;">选择pof文件</div>
 </center>
+
+<p>之后就可以通过开发板把波形输出到示波器上观察了</p>
+<blockquote>
+<p>但是我当时没有拍照，所以这里就没有成果照片了…</p>
+</blockquote>
+
             </div>
 
             <!-- Post Comments -->
