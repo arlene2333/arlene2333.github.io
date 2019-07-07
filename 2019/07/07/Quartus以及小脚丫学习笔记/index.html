@@ -186,10 +186,40 @@
     padding: 2px;">错误的选择</div>
 </center>
 
-<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><blockquote>
-<p>通过做实验来熟悉这个软件以及了解IP核的使用，明白了锁相环是什么东西</p>
-</blockquote>
+<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>通过做实验来熟悉这个软件以及了解IP核的使用，明白了锁相环是什么东西<br><br>如在实现移频的实验中，就要用到 PLL IP核来利用小脚丫开发板本身的12MHz频率来生成两个时钟频率10MHZ和10KHz<br>再将这两个频率的信号相与就可以实现移频<br>具体的代码如下：</p>
+<pre><code>module usePLL (clk,rst_n,clkout);
 
+    input     clk,rst_n;                       //输入信号，其中clk连接到FPGA的C1脚，频率为12MHz
+    output    clkout;                          
+      wire[1:0] temp1;
+      wire[1:0] temp2;
+
+ pll1 m1(.inclk0(clk),
+            .c0(temp1),//10M
+            .c1(temp2)
+
+            );
+    process m2(
+    .clk_in1(temp1),
+    .clk_in2(temp2),
+    .clk_process(clkout)
+    );
+
+
+endmodule
+
+
+module process(clk_in1,clk_in2,clk_process);
+
+input clk_in1,clk_in2;
+
+output clk_process;
+
+
+
+assign clk_process = clk_in1 &amp; clk_in2;
+
+endmodule</code></pre>
             </div>
 
             <!-- Post Comments -->
